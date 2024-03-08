@@ -54,12 +54,12 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html#hero" class="active">Home</a></li>
-          <li><a href="index.html#about">About</a></li>
-          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#about">Nosotros</a></li>
+          <li><a href="index.html#services">Servicios</a></li>
           <li><a href="index.html#portfolio">Portfolio</a></li>
-          <li><a href="index.html#team">Team</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li class="dropdown has-dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down"></i></a>
+          <li><a href="index.html#team">Equipo</a></li>
+          <li><a href="blog.html">Noticas</a></li>
+          <li class="dropdown has-dropdown"><a href="#"><span>Trabajos</span> <i class="bi bi-chevron-down"></i></a>
             <ul class="dd-box-shadow">
               <li><a href="#">Dropdown 1</a></li>
               <li class="dropdown has-dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down"></i></a>
@@ -76,13 +76,13 @@
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li>
-          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#contact">Contactanos</a></li>
         </ul>
 
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav><!-- End Nav Menu -->
 
-      <a class="btn-getstarted" href="index.html#about">Get Started</a>
+      <a class="btn-getstarted" href="index.html#about">Conocenos</a>
 
     </div>
   </header><!-- End Header -->
@@ -101,10 +101,11 @@
             <p data-aos="fade-up" data-aos-delay="200">Somos una empresa que trabajamos con dispositivos biomedicos, electornica, sistemas y muchos más </p>
           </div>
           <div class="col-lg-5">
-            <form action="#" class="sign-up-form d-flex" data-aos="fade-up" data-aos-delay="300">
-              <input type="text" class="form-control" placeholder="Enter email address">
-              <input type="submit" class="btn btn-primary" value="Sign up">
+            <form action="#" class="sign-up-form d-flex" data-aos="fade-up" data-aos-delay="300" id="signupForm">
+              <input type="text" class="form-control" placeholder="Enter email address" id="emailInput">
+              <input type="button" class="btn btn-primary" value="Contactanos" id="signupButton">
             </form>
+          </div>
           </div>
         </div>
       </div>
@@ -156,9 +157,9 @@
 
           <div class="col-xl-5 content">
             <h3>Acerca de Nosotros Us</h3>
-            <h2>Nuestros servicios:</h2>
-            <p>SynergyaTech - Biomedical, una división especializada de SynergyaTech, se dedica al mantenimiento y reparación de dispositivos biomédicos, asegurando su óptimo funcionamiento y fiabilidad. Con un profundo compromiso hacia la innovación y la calidad, ofrecemos soluciones avanzadas que mejoran el cuidado de la salud y la eficacia del tratamiento médico.</p>
-            <p>Nuestros servicios se presentan a continuación:</p>
+            <h2>Divisiones de SynergyaTech</h2>
+            <p>SynergyaTech es una empresa innovadora que provee soluciones tecnológicas en tres áreas clave: Biomédica, Sistemas y Eléctrica. Nos especializamos en reparar y mantener dispositivos biomédicos y computadoras, diseñar páginas y aplicaciones web avanzadas, y crear dispositivos eléctricos y electrónicos personalizados, incluyendo transformadores y UPS. Utilizamos tecnologías de punta como inteligencia artificial e internet de las cosas para ofrecer servicios que mejoran la salud, la eficiencia energética y la operatividad de sistemas informáticos</p>
+            <p>Estas divisiones se presenta a continuación</p>
             <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
           </div>
 
@@ -168,8 +169,8 @@
               <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
                 <div class="icon-box">
                   <i class="bi bi-buildings"></i>
-                  <h3>Odontología</h3>
-                  <p>Proveemos mantenimiento y reparación para unidades odontológicas completas, incluyendo piezas de mano de alta velocidad, sistemas de rayos X odontológicos y más, asegurando la seguridad y eficacia en los tratamientos dentales.</p>
+                  <h3>SynergyaTech Biomedica:</h3>
+                  <p>La división biomedica de SynergyaTech se encarga de la atencion a los equipos biomedicos de los diferentes clinicas aliadas, realizamos mantenimiento preventivo y correctivo de equipos en diferentes areas como odontologia, estetica, consulta externa, laboratorio, cirujia, etc. Nos comprometemos con la calidad de nuestros servicios dando garantia sobre nuestro trabajo para que nuestros clientes cuenten con un aliado comprometido</p>
                   
                 </div>
               </div> <!-- End Icon Box -->
@@ -1205,6 +1206,24 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script>
+    document.getElementById('signupButton').addEventListener('click', function(event) {
+      var email = document.getElementById('emailInput').value;
+      if(email) {
+        // Aquí puedes personalizar el asunto y el cuerpo del correo
+        var subject = encodeURIComponent('Interesado en los servicios de SynergyaTech');
+        // Reemplaza '[Tu Correo Aquí]' con la dirección de correo electrónico proporcionada por el usuario
+        var emailBody = encodeURIComponent('Hola, estoy interesado(a) en aprender más sobre los servicios y soluciones que ofrece SynergyaTech. Por favor, pónganse en contacto conmigo para discutir cómo pueden ayudar a mi negocio. Aquí está mi correo electrónico para seguir en contacto: ' + email + '.\n\nGracias.');
+        var mailtoLink = 'mailto:wilmer13194@gmail.com?subject=' + subject + '&body=' + emailBody; // Asegúrate de reemplazar 'info@synergyatech.com' con tu dirección de correo de contacto
+        
+        // Abre la aplicación de correo predeterminada del usuario con el correo, asunto y cuerpo predefinidos
+        window.location.href = mailtoLink;
+      } else {
+        alert('Please enter an email address.');
+      }
+    });
+  </script>
+  
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
