@@ -1,217 +1,404 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soluciones Web para tu Negocio</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            background-color: #f4f4f4;
-            padding: 20px 0;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-        }
-        section {
-            padding: 40px 0;
-        }
-        #soluciones-web h2 {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        #planes {
-            background-color: #f9f9f9;
-            text-align: center;
-        }
-        #planes h2 {
-             text-align: center;
-            margin-bottom: 40px;
-        }
-        .plan-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .plan {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 30px;
-            border-radius: 8px;
-            width: 300px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: left;
-        }
-        .plan h3 {
-            text-align: center;
-            margin-top: 0;
-            color: #007bff;
-        }
-        .plan .price {
-            font-size: 1.8em;
-            text-align: center;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-         .plan .price span {
-             font-size: 0.6em;
-             font-weight: normal;
-             vertical-align: super;
-         }
-        .plan ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .plan ul li {
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-        }
-         .plan ul li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: green;
-        }
-        .plan .btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        #presencia-digital h2 {
-             text-align: center;
-            margin-bottom: 40px;
-        }
-        #contact {
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        #contact h2 {
-             text-align: center;
-            margin-bottom: 40px;
-        }
-         footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Soluciones Web para tu Negocio - SynergyaTech</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/logo.jpg" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent-color: #2f14ca; /* Color principal/acento del sitio */
+      --background-color: #ffffff; /* Color de fondo */
+      --default-color: #212529; /* Color de texto predeterminado */
+      --heading-color: #32353a; /* Color de encabezados */
+      --contrast-color: #ffffff; /* Color de contraste (blanco) */
+    }
+    
+    body {
+      font-family: "Open Sans", sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      color: var(--default-color);
+      background-color: var(--background-color);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    section {
+      padding: 40px 0;
+    }
+    #soluciones-web h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #2f14ca; /* Color directo para encabezados */
+    }
+    #planes {
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+    #planes h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #2f14ca; /* Color directo para encabezados */
+    }
+    .plan-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .plan {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 30px;
+      border-radius: 8px;
+      width: 300px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+    .plan h3 {
+      text-align: center;
+      margin-top: 0;
+      color: #2f14ca; /* Color directo para títulos de planes */
+    }
+    .plan .subtitle {
+      text-align: center;
+      font-style: italic;
+      margin-bottom: 15px;
+      color: #666;
+    }
+    .plan .price {
+      font-size: 1.8em;
+      text-align: center;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+    .plan .price span {
+      font-size: 0.6em;
+      font-weight: normal;
+      vertical-align: super;
+    }
+    .plan ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .plan ul li {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+    .plan ul li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #2f14ca; /* Color directo para íconos de verificación */
+    }
+    .plan .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #2f14ca; /* Color directo para botones */
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+    .plan .btn:hover {
+      background-color: rgba(47, 20, 202, 0.8);
+    }
+    #presencia-digital h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #2f14ca; /* Color directo para encabezados */
+    }
+    #contact {
+      background-color: #f9f9f9;
+      text-align: center;
+      padding: 60px 0;
+    }
+    #contact h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #2f14ca; /* Color directo para encabezados */
+    }
+    #contact .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+    #contact .contact-item {
+      flex: 1;
+      min-width: 200px;
+      max-width: 300px;
+      padding: 20px;
+    }
+    #contact .contact-item i {
+      font-size: 24px;
+      color: #2f14ca; /* Color directo para íconos */
+      margin-bottom: 10px;
+    }
+    
+    /* Estilos para el contenido principal */
+    main {
+      margin-top: 80px; /* Espacio para el header fijo */
+    }
+    
+    /* Ajustes para la sección de planes */
+    #planes .section-header h2 {
+      color: #2f14ca;
+    }
+  </style>
 </head>
+
 <body>
 
-    <header>
-        <div class="container">
-            <h1>Tu presencia digital sin complicaciones</h1>
-        </div>
-    </header>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1>SynergyaTech</h1>
+        <span>.</span>
+      </a>
+
+      <!-- Nav Menu -->
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html#hero">Inicio</a></li>
+          <li><a href="index.html#about">Nosotros</a></li>
+          <li><a href="index.html#services">Servicios</a></li>
+          <li><a href="index.html#portfolio">Proyectos</a></li>
+          <li><a href="index.html#team">Equipo</a></li>
+          <li><a href="blog.html">Noticias</a></li>
+          <li class="dropdown has-dropdown"><a href="#"><span>Trabajos</span> <i class="bi bi-chevron-down"></i></a>
+            <ul class="dd-box-shadow">
+              <li><a href="#">Opción 1</a></li>
+              <li class="dropdown has-dropdown"><a href="#"><span>Subopción</span> <i class="bi bi-chevron-down"></i></a>
+                <ul class="dd-box-shadow">
+                  <li><a href="#">Subopción 1</a></li>
+                  <li><a href="#">Subopción 2</a></li>
+                  <li><a href="#">Subopción 3</a></li>
+                  <li><a href="#">Subopción 4</a></li>
+                  <li><a href="#">Subopción 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Opción 2</a></li>
+              <li><a href="#">Opción 3</a></li>
+              <li><a href="#">Opción 4</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">Contacto</a></li>
+        </ul>
+
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav><!-- End Nav Menu -->
+
+      <a class="btn-getstarted" href="index.html#about">Conócenos</a>
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
 
     <section id="soluciones-web">
-        <div class="container">
-            <h2>Soluciones Web para tu Negocio</h2>
-            <p>Ofrecemos soluciones de desarrollo web personalizadas para ayudar a tu negocio a crecer en el entorno digital. Desde sitios web informativos hasta plataformas de comercio electrónico complejas, estamos aquí para ayudarte a alcanzar tus objetivos.</p>
-            <p>Nos enfocamos en crear experiencias de usuario excepcionales, diseños modernos y funcionales, y en asegurar que tu sitio web sea rápido, seguro y optimizado para motores de búsqueda.</p>
-        </div>
+      <div class="container">
+        <h2>Soluciones Web para tu Negocio</h2>
+        <p>Ofrecemos soluciones de desarrollo web personalizadas para ayudar a tu negocio a crecer en el entorno digital. Desde sitios web informativos hasta plataformas de comercio electrónico complejas, estamos aquí para ayudarte a alcanzar tus objetivos.</p>
+        <p>Nos enfocamos en crear experiencias de usuario excepcionales, diseños modernos y funcionales, y en asegurar que tu sitio web sea rápido, seguro y optimizado para motores de búsqueda.</p>
+      </div>
     </section>
 
     <section id="planes">
-        <div class="container">
-            <h2>Nuestros Planes</h2>
-            <div class="plan-container">
-                <div class="plan">
-                    <h3>Plan Inicial</h3>
-                    <div class="price">$XXX<span>/mes</span></div>
-                    <ul>
-                        <li>Diseño responsivo</li>
-                        <li>Sitio web de 5 páginas</li>
-                        <li>Hosting incluido (1 año)</li>
-                        <li>Dominio incluido (1 año)</li>
-                        <li>Certificado SSL</li>
-                        <li>Formulario de contacto</li>
-                    </ul>
-                    <a href="#" class="btn">Seleccionar Plan</a>
-                </div>
+      <div class="container">
+        <h2>Planes Sencillos</h2>
+        <div class="plan-container">
+          <div class="plan">
+            <h3>Plan Inicial</h3>
+            <div class="subtitle">Lo esencial para empezar</div>
+            <div class="price">$120.000<span> COP</span></div>
+            <ul>
+              <li>Página web de presentación</li>
+              <li>Dominio .com por 1 año</li>
+              <li>Diseño adaptable a móviles</li>
+              <li>Formulario de contacto</li>
+              <li>Conexión con redes sociales</li>
+              <li>Configuración en Google Maps</li>
+            </ul>
+            <a href="#contact" class="btn">Seleccionar Plan</a>
+          </div>
 
-                <div class="plan">
-                    <h3>Plan Negocio</h3>
-                     <div class="price">$YYY<span>/mes</span></div>
-                    <ul>
-                        <li>Diseño responsivo y personalizado</li>
-                        <li>Sitio web de hasta 10 páginas</li>
-                        <li>Hosting incluido (1 año)</li>
-                        <li>Dominio incluido (1 año)</li>
-                        <li>Certificado SSL</li>
-                        <li>Formulario de contacto avanzado</li>
-                        <li>Integración con redes sociales</li>
-                        <li>Optimización SEO básica</li>
-                    </ul>
-                    <a href="#" class="btn">Seleccionar Plan</a>
-                </div>
+          <div class="plan">
+            <h3>Plan Negocio</h3>
+            <div class="subtitle">Para empresas que quieren crecer</div>
+            <div class="price">$450.000<span> COP</span></div>
+            <ul>
+              <li>Sitio web hasta 5 páginas</li>
+              <li>Hosting profesional por 1 año</li>
+              <li>Dominio .com incluido</li>
+              <li>Diseño profesional personalizado</li>
+              <li>Formularios inteligentes</li>
+              <li>Posicionamiento local básico</li>
+              <li>Soporte por 3 meses</li>
+            </ul>
+            <a href="#contact" class="btn">Seleccionar Plan</a>
+          </div>
 
-                <div class="plan">
-                    <h3>Plan Completo</h3>
-                     <div class="price">$ZZZ<span>/mes</span></div>
-                    <ul>
-                        <li>Diseño responsivo y personalizado avanzado</li>
-                        <li>Sitio web de hasta 20 páginas</li>
-                        <li>Hosting de alto rendimiento (1 año)</li>
-                        <li>Dominio incluido (1 año)</li>
-                        <li>Certificado SSL</li>
-                        <li>Formulario de contacto avanzado</li>
-                        <li>Integración con redes sociales</li>
-                        <li>Optimización SEO completa</li>
-                        <li>Blog integrado</li>
-                        <li>Soporte prioritario</li>
-                    </ul>
-                    <a href="#" class="btn">Seleccionar Plan</a>
-                </div>
-            </div>
+          <div class="plan">
+            <h3>Plan Completo</h3>
+            <div class="subtitle">Presencia digital profesional</div>
+            <div class="price">$1.200.000<span> COP</span></div>
+            <ul>
+              <li>Sitio web completo (hasta 10 páginas)</li>
+              <li>Sistema de catálogo/reservas</li>
+              <li>Panel de administración propio</li>
+              <li>Optimización avanzada para Google</li>
+              <li>Hosting de alta velocidad</li>
+              <li>Integraciones con otros sistemas</li>
+              <li>Soporte técnico por 6 meses</li>
+            </ul>
+            <a href="#contact" class="btn">Seleccionar Plan</a>
+          </div>
         </div>
+      </div>
     </section>
 
-     <section id="presencia-digital">
-        <div class="container">
-            <h2>Tu presencia digital sin complicaciones</h2>
-            <p>Entendemos que tener una presencia online efectiva puede parecer abrumador. Nos encargamos de todos los aspectos técnicos para que tú puedas concentrarte en lo que mejor sabes hacer: dirigir tu negocio.</p>
-            <p>Desde el diseño inicial hasta la puesta en marcha y el mantenimiento, te acompañamos en cada paso del proceso para asegurar que tu experiencia sea lo más sencilla y fluida posible.</p>
-        </div>
+    <section id="presencia-digital">
+      <div class="container">
+        <h2>Tu presencia digital sin complicaciones</h2>
+        <p>Entendemos que tener una presencia online efectiva puede parecer abrumador. Nos encargamos de todos los aspectos técnicos para que tú puedas concentrarte en lo que mejor sabes hacer: dirigir tu negocio.</p>
+        <p>Desde el diseño inicial hasta la puesta en marcha y el mantenimiento, te acompañamos en cada paso del proceso para asegurar que tu experiencia sea lo más sencilla y fluida posible.</p>
+      </div>
     </section>
 
     <section id="contact">
-        <div class="container">
-            <h2>Contáctanos</h2>
-            <p>¿Listo para llevar tu negocio al siguiente nivel online? Contáctanos hoy mismo para discutir tus necesidades y cómo podemos ayudarte.</p>
-            <p>Email: contacto@tudominio.com</p>
-            <p>Teléfono: +54 9 11 1234 5678</p>
+      <div class="container">
+        <h2>Contáctanos</h2>
+        <p>¿Listo para llevar tu negocio al siguiente nivel online? Contáctanos hoy mismo para discutir tus necesidades y cómo podemos ayudarte.</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <p><strong>Teléfono:</strong></p>
+            <p>322 4032671</p>
+          </div>
+          <div class="contact-item">
+            <p><strong>Email:</strong></p>
+            <p>business@synergyatech.org</p>
+          </div>
+          <div class="contact-item">
+            <p><strong>Web:</strong></p>
+            <p>www.synergyatech.org/sistemas</p>
+          </div>
+          <div class="contact-item">
+            <p><strong>Ubicación:</strong></p>
+            <p>Cúcuta, Norte de Santander</p>
+          </div>
         </div>
+      </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Tu Empresa. Todos los derechos reservados.</p>
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span>SynergyaTech</span>
+          </a>
+          <p>Innovación, tecnología y compromiso en cada solución.</p>
+          <div class="social-links d-flex mt-4">
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
         </div>
-    </footer>
+
+        <div class="col-lg-4 col-md-12 footer-links">
+          <h4>Nuestros Servicios</h4>
+          <ul>
+            <li><a href="#">Mantenimiento Biomédico</a></li>
+            <li><a href="#">Diseño Web</a></li>
+            <li><a href="#">Administración de Servidores</a></li>
+            <li><a href="#">Soluciones Eléctricas</a></li>
+            <li><a href="#">Innovación Tecnológica</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contáctanos</h4>
+          <p>Cúcuta<br>Norte de Santander<br>Colombia</p>
+          <p class="mt-4"><strong>Teléfono:</strong> <span>322 4032671</span></p>
+          <p><strong>Email:</strong> <span>business@synergyatech.org</span></p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>&copy; <span>Copyright</span> <strong class="px-1">SynergyaTech</strong> <span>Todos los Derechos Reservados</span></p>
+      <div class="credits">
+        Diseñado por <a href="https://synergyatech.org/">SynergyaTech</a>
+      </div>
+    </div>
+
+  </footer><!-- End Footer -->
+
+  <!-- Scroll Top Button -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
 
 </body>
+
 </html>
