@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Selección de Plan - SynergyaTech</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/logo.jpg" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent-color: #2f14ca;
+      --background-color: #ffffff;
+      --default-color: #212529;
+      --heading-color: #32353a;
+      --contrast-color: #ffffff;
+    }
+    
+    body {
+      font-family: "Open Sans", sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      color: var(--default-color);
+      background-color: var(--background-color);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    main {
+      margin-top: 80px;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+    }
+    
+    .plan-selection-container {
+      background-color: #f9f9f9;
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .plan-info {
+      margin-bottom: 40px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      border-left: 5px solid var(--accent-color);
+    }
+    
+    .plan-info h2 {
+      color: var(--accent-color);
+      margin-bottom: 10px;
+    }
+    
+    .plan-price {
+      font-size: 2em;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin: 15px 0;
+    }
+    
+    .options-container {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    
+    .option-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 30px;
+      width: 300px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .option-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .option-icon {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+    }
+    
+    .option-title {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: var(--heading-color);
+    }
+    
+    .option-description {
+      color: #666;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .option-btn {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    
+    .option-btn:hover {
+      background-color: rgba(47, 20, 202, 0.8);
+      color: white;
+      text-decoration: none;
+    }
+    
+    .whatsapp-btn {
+      background-color: #25D366;
+    }
+    
+    .whatsapp-btn:hover {
+      background-color: #128C7E;
+    }
+    
+    .back-btn {
+      position: absolute;
+      top: 100px;
+      left: 20px;
+      background-color: transparent;
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      background-color: var(--accent-color);
+      color: white;
+      text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+      .options-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .option-card {
+        width: 100%;
+        max-width: 350px;
+      }
+      
+      .plan-selection-container {
+        padding: 20px;
+      }
+      
+      .back-btn {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Placeholder para el encabezado -->
+  <div id="header-placeholder"></div>
+
+  <main id="main">
+    <a href="sistemas.html" class="back-btn">
+      <i class="bi bi-arrow-left"></i> Volver a Planes
+    </a>
+    
+    <div class="container">
+      <div class="plan-selection-container">
+        <div class="plan-info">
+          <h2 id="plan-name">Plan Seleccionado</h2>
+          <div class="plan-price" id="plan-price">$0 COP</div>
+          <p>Has seleccionado este plan. Ahora elige cómo quieres proceder:</p>
+        </div>
+        
+        <div class="options-container">
+          <div class="option-card" onclick="contactWhatsApp()">
+            <div class="option-icon">
+              <i class="bi bi-whatsapp"></i>
+            </div>
+            <div class="option-title">Contactar por WhatsApp</div>
+            <div class="option-description">
+              Habla directamente con nuestro equipo para resolver dudas, personalizar tu plan o recibir asesoría especializada.
+            </div>
+            <a href="#" class="option-btn whatsapp-btn" onclick="contactWhatsApp(); return false;">
+              <i class="bi bi-whatsapp"></i> Contactar Ahora
+            </a>
+          </div>
+          
+          <div class="option-card" onclick="proceedToPayment()">
+            <div class="option-icon">
+              <i class="bi bi-credit-card"></i>
+            </div>
+            <div class="option-title">Proceder al Pago</div>
+            <div class="option-description">
+              Continúa directamente al proceso de pago seguro para adquirir tu plan y comenzar tu proyecto de inmediato.
+            </div>
+            <a href="#" class="option-btn" onclick="proceedToPayment(); return false;">
+              <i class="bi bi-credit-card"></i> Pagar Ahora
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Placeholder para el pie de página -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  
+  <!-- Components JS File -->
+  <script src="assets/js/components.js"></script>
+
+  <script>
+    // Obtener parámetros de la URL
+    function getUrlParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return {
+        plan: urlParams.get('plan'),
+        price: urlParams.get('price')
+      };
+    }
+    
+    // Configurar la información del plan
+    function setupPlanInfo() {
+      const params = getUrlParams();
+      const planNames = {
+        'inicial': 'Plan Inicial',
+        'negocio': 'Plan Negocio', 
+        'completo': 'Plan Completo'
+      };
+      
+      if (params.plan && params.price) {
+        document.getElementById('plan-name').textContent = planNames[params.plan] || 'Plan Seleccionado';
+        document.getElementById('plan-price').textContent = `$${parseInt(params.price).toLocaleString()} COP`;
+      }
+    }
+    
+    // Función para contactar por WhatsApp
+    function contactWhatsApp() {
+      const params = getUrlParams();
+      const planNames = {
+        'inicial': 'Plan Inicial',
+        'negocio': 'Plan Negocio',
+        'completo': 'Plan Completo'
+      };
+      
+      const planName = planNames[params.plan] || 'Plan';
+      const price = params.price ? `$${parseInt(params.price).toLocaleString()} COP` : '';
+      
+      const message = `Hola! Estoy interesado en el ${planName} (${price}) de SynergyaTech. Me gustaría obtener más información y resolver algunas dudas.`;
+      const phoneNumber = '573209214326'; // Número de WhatsApp de SynergyaTech
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      
+      window.open(whatsappUrl, '_blank');
+    }
+    
+    // Función para proceder al pago
+    function proceedToPayment() {
+      const params = getUrlParams();
+      
+      // Aquí puedes integrar con tu pasarela de pago preferida
+      // Por ejemplo: PayU, Mercado Pago, Stripe, etc.
+      
+      // Ejemplo básico - redirigir a una página de pago
+      alert('Redirigiendo a la pasarela de pago segura...');
+      
+      // Ejemplo de integración con una pasarela de pago
+      // window.location.href = `payment.html?plan=${params.plan}&price=${params.price}`;
+      
+      // O abrir directamente la pasarela de pago externa
+      // window.open('https://checkout.payulatam.com/...', '_blank');
+    }
+    
+    // Inicializar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      setupPlanInfo();
+    });
+  </script>
+
+</body>
+
+</html>
