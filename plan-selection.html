@@ -31,6 +31,27 @@
   <!-- SDK de Wompi -->
   <script src="https://checkout.wompi.co/widget.js"></script>
 
+  <!-- Verificador de carga de Wompi -->
+  <script>
+    window.addEventListener('load', function() {
+      if (typeof WidgetCheckout === 'undefined') {
+        console.error('Error: Wompi SDK no se cargó');
+        // Intentar cargar nuevamente
+        const script = document.createElement('script');
+        script.src = 'https://checkout.wompi.co/widget.js';
+        script.onload = function() {
+          console.log('Wompi SDK cargado en segundo intento');
+        };
+        script.onerror = function() {
+          console.error('Error: No se pudo cargar Wompi SDK');
+        };
+        document.head.appendChild(script);
+      } else {
+        console.log('Wompi SDK cargado correctamente en el primer intento');
+      }
+    });
+  </script>
+
   <style>
     :root {
       --accent-color: #2f14ca;
@@ -226,6 +247,7 @@
       border-radius: 8px;
       font-size: 16px;
       transition: border-color 0.3s ease;
+      box-sizing: border-box;
     }
 
     .form-input:focus {
@@ -372,16 +394,27 @@
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-  
   <!-- Components JS File -->
   <script src="assets/js/components.js"></script>
 
   <script>
-    // Variables globales para almacenar información del plan
+    // Variables globales
     let currentPlanName = '';
     let currentPlanPrice = '';
+    let isWompiLoaded = false;
+
+    // Verificar carga de Wompi
+    function checkWompiSDK() {
+      if (typeof WidgetCheckout !== 'undefined') {
+        isWompiLoaded = true;
+        console.log('✅ Wompi SDK está disponible');
+        return true;
+      } else {
+        isWompiLoaded = false;
+        console.log('❌ Wompi SDK no está disponible');
+        return false;
+      }
+    }
 
     // Obtener parámetros de la URL
     function getUrlParams() {
@@ -401,13 +434,122 @@
         'completo': 'Plan Completo'
       };
       
+      console.log('🔍 Parámetros recibidos:', params);
+      
       if (params.plan && params.price) {
         currentPlanName = planNames[params.plan] || 'Plan Seleccionado';
         currentPlanPrice = params.price;
         
-        document.getElementById('plan-name').textContent = currentPlanName;
-        document.getElementById('plan-price').textContent = `$${parseInt(params.price).toLocaleString()} COP`;
+        const planNameElement = document.getElementById('plan-name');
+        const planPriceElement = document.getElementById('plan-price');
+        
+        if (planNameElement) planNameElement.textContent = currentPlanName;
+        if (planPriceElement) planPriceElement.textContent = `$${parseInt(params.price).toLocaleString()} COP`;
+        
+        const optionsContainer = document.querySelector('.options-container');
+        if (optionsContainer) optionsContainer.style.display = 'flex';
+        
+        console.log('✅ Plan configurado:', currentPlanName, currentPlanPrice);
+      } else {
+        console.log('⚠️ No hay parámetros, mostrando selector de plan');
+        showPlanSelector();
       }
+    }
+
+    // Mostrar selector de plan cuando no hay parámetros
+    function showPlanSelector() {
+      const planNameElement = document.getElementById('plan-name');
+      const planPriceElement = document.getElementById('plan-price');
+      
+      if (planNameElement) planNameElement.textContent = 'Selecciona tu Plan';
+      if (planPriceElement) planPriceElement.innerHTML = '<em>Elige una opción</em>';
+      
+      const optionsContainer = document.querySelector('.options-container');
+      if (optionsContainer) optionsContainer.style.display = 'none';
+      
+      const planSelectorHTML = `
+        <div id="plan-selector-container" style="margin-top: 30px;">
+          <h3 style="text-align: center; color: var(--accent-color); margin-bottom: 30px;">
+            ¿Qué plan necesitas?
+          </h3>
+          <div class="plan-selector-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            
+            <div class="plan-selector-card" style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+              <h4 style="color: var(--accent-color); margin-bottom: 10px;">Plan Inicial</h4>
+              <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Lo esencial para empezar</p>
+              <div style="font-size: 24px; font-weight: bold; color: var(--accent-color); margin-bottom: 20px;">
+                $120.000 <span style="font-size: 14px; font-weight: normal;">COP</span>
+              </div>
+              <button onclick="selectPlan('inicial', '120000')" style="width: 100%; padding: 12px; background: var(--accent-color); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                Seleccionar
+              </button>
+            </div>
+
+            <div class="plan-selector-card" style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+              <h4 style="color: var(--accent-color); margin-bottom: 10px;">Plan Negocio</h4>
+              <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Para empresas que quieren crecer</p>
+              <div style="font-size: 24px; font-weight: bold; color: var(--accent-color); margin-bottom: 20px;">
+                $450.000 <span style="font-size: 14px; font-weight: normal;">COP</span>
+              </div>
+              <button onclick="selectPlan('negocio', '450000')" style="width: 100%; padding: 12px; background: var(--accent-color); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                Seleccionar
+              </button>
+            </div>
+
+            <div class="plan-selector-card" style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease;">
+              <h4 style="color: var(--accent-color); margin-bottom: 10px;">Plan Completo</h4>
+              <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Presencia digital profesional</p>
+              <div style="font-size: 24px; font-weight: bold; color: var(--accent-color); margin-bottom: 20px;">
+                $1.200.000 <span style="font-size: 14px; font-weight: normal;">COP</span>
+              </div>
+              <button onclick="selectPlan('completo', '1200000')" style="width: 100%; padding: 12px; background: var(--accent-color); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                Seleccionar
+              </button>
+            </div>
+
+          </div>
+          
+          <div style="text-align: center; margin-top: 30px;">
+            <a href="sistemas.html" style="color: var(--accent-color); text-decoration: none; font-weight: 500;">
+              ← Ver detalles completos de los planes
+            </a>
+          </div>
+        </div>
+      `;
+      
+      const container = document.querySelector('.plan-selection-container');
+      if (container) container.insertAdjacentHTML('beforeend', planSelectorHTML);
+    }
+
+    // Función para seleccionar un plan desde el selector
+    function selectPlan(planType, price) {
+      console.log('🎯 Plan seleccionado:', planType, price);
+      
+      const newUrl = `${window.location.pathname}?plan=${planType}&price=${price}`;
+      window.history.pushState({}, '', newUrl);
+      
+      const selector = document.getElementById('plan-selector-container');
+      if (selector) selector.remove();
+      
+      const planNames = {
+        'inicial': 'Plan Inicial',
+        'negocio': 'Plan Negocio',
+        'completo': 'Plan Completo'
+      };
+      
+      currentPlanName = planNames[planType] + ' - Desarrollo Web';
+      currentPlanPrice = price;
+      
+      const planNameElement = document.getElementById('plan-name');
+      const planPriceElement = document.getElementById('plan-price');
+      
+      if (planNameElement) planNameElement.textContent = planNames[planType];
+      if (planPriceElement) planPriceElement.textContent = `$${parseInt(price).toLocaleString()} COP`;
+      
+      const optionsContainer = document.querySelector('.options-container');
+      if (optionsContainer) optionsContainer.style.display = 'flex';
+      
+      console.log('✅ Plan configurado:', currentPlanName, currentPlanPrice);
     }
     
     // Función para contactar por WhatsApp
@@ -423,15 +565,28 @@
       const price = params.price ? `$${parseInt(params.price).toLocaleString()} COP` : '';
       
       const message = `Hola! Estoy interesado en el ${planName} (${price}) de SynergyaTech. Me gustaría obtener más información y resolver algunas dudas.`;
-      const phoneNumber = '573209214326'; // Número de WhatsApp de SynergyaTech
+      const phoneNumber = '573209214326';
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
       
       window.open(whatsappUrl, '_blank');
     }
     
-    // Función para proceder al pago con formulario
+    // Función para proceder al pago
     function proceedToPayment() {
       const params = getUrlParams();
+      
+      console.log('💳 Iniciando proceso de pago con parámetros:', params);
+      
+      if (!params.plan || !params.price || params.price === '0') {
+        alert('Error: No se ha seleccionado un plan válido. Por favor selecciona un plan primero.');
+        return;
+      }
+
+      // Verificar Wompi nuevamente antes de proceder
+      if (!checkWompiSDK()) {
+        alert('Error: Sistema de pago no disponible. Por favor recarga la página e intenta nuevamente.');
+        return;
+      }
       
       const planNames = {
         'inicial': 'Plan Inicial - Desarrollo Web',
@@ -440,14 +595,27 @@
       };
       
       currentPlanName = planNames[params.plan] || 'Plan de Desarrollo Web';
-      currentPlanPrice = params.price || '0';
+      currentPlanPrice = params.price;
       
-      // Crear modal con formulario
+      console.log('🎯 Plan seleccionado:', currentPlanName, 'Precio:', currentPlanPrice);
+      
+      showPaymentForm();
+    }
+
+    function showPaymentForm() {
+      // Remover modal existente si existe
+      const existingModal = document.getElementById('customer-modal');
+      if (existingModal) existingModal.remove();
+
       const modalHTML = `
         <div id="customer-modal" class="customer-modal">
           <div class="modal-content">
             <h3 class="modal-title">Información para el pago</h3>
-            <form id="customer-form">
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">
+              Plan: <strong>${currentPlanName}</strong><br>
+              Precio: <strong>$${parseInt(currentPlanPrice).toLocaleString()} COP</strong>
+            </p>
+            <form id="customer-form" onsubmit="return handleFormSubmit(event);">
               <div class="form-group">
                 <label class="form-label">Nombre completo *</label>
                 <input type="text" id="fullName" class="form-input" required placeholder="Ingresa tu nombre completo">
@@ -477,37 +645,44 @@
       
       document.body.insertAdjacentHTML('beforeend', modalHTML);
       
-      // Enfocar el primer campo
       setTimeout(() => {
-        document.getElementById('fullName').focus();
+        const fullNameInput = document.getElementById('fullName');
+        if (fullNameInput) fullNameInput.focus();
       }, 100);
-      
-      // Manejar envío del formulario
-      document.getElementById('customer-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        if (validateForm()) {
-          const customerData = {
-            fullName: document.getElementById('fullName').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            phoneNumber: document.getElementById('phone').value.trim(),
-            phoneNumberCountryCode: 'CO'
-          };
-          
-          closeCustomerModal();
-          openWompiCheckout(currentPlanName, currentPlanPrice, customerData);
-        }
-      });
 
-      // Agregar validación en tiempo real
       addRealTimeValidation();
     }
 
-    // Función para validar el formulario
+    // Manejar envío del formulario - FUNCIÓN CLAVE
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      console.log('📋 Formulario enviado');
+      
+      if (validateForm()) {
+        const customerData = {
+          fullName: document.getElementById('fullName').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          phoneNumber: document.getElementById('phone').value.trim(),
+          phoneNumberCountryCode: 'CO'
+        };
+        
+        console.log('✅ Datos del cliente:', customerData);
+        
+        closeCustomerModal();
+        
+        setTimeout(() => {
+          openWompiCheckout(currentPlanName, currentPlanPrice, customerData);
+        }, 300);
+      }
+      
+      return false;
+    }
+
     function validateForm() {
       let isValid = true;
       
-      // Validar nombre
       const fullName = document.getElementById('fullName').value.trim();
       const fullNameError = document.getElementById('fullName-error');
       if (fullName.length < 2) {
@@ -517,7 +692,6 @@
         fullNameError.style.display = 'none';
       }
       
-      // Validar email
       const email = document.getElementById('email').value.trim();
       const emailError = document.getElementById('email-error');
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -528,7 +702,6 @@
         emailError.style.display = 'none';
       }
       
-      // Validar teléfono
       const phone = document.getElementById('phone').value.trim();
       const phoneError = document.getElementById('phone-error');
       const phoneRegex = /^\d{10}$/;
@@ -539,105 +712,136 @@
         phoneError.style.display = 'none';
       }
       
+      console.log('🔍 Validación del formulario:', isValid);
       return isValid;
     }
 
-    // Función para agregar validación en tiempo real
     function addRealTimeValidation() {
-      // Validación para nombre
-      document.getElementById('fullName').addEventListener('blur', function() {
-        const fullName = this.value.trim();
-        const fullNameError = document.getElementById('fullName-error');
-        if (fullName.length > 0 && fullName.length < 2) {
-          fullNameError.style.display = 'block';
-        } else {
-          fullNameError.style.display = 'none';
-        }
-      });
+      const fullNameInput = document.getElementById('fullName');
+      if (fullNameInput) {
+        fullNameInput.addEventListener('blur', function() {
+          const fullName = this.value.trim();
+          const fullNameError = document.getElementById('fullName-error');
+          if (fullNameError) {
+            if (fullName.length > 0 && fullName.length < 2) {
+              fullNameError.style.display = 'block';
+            } else {
+              fullNameError.style.display = 'none';
+            }
+          }
+        });
+      }
 
-      // Validación para email
-      document.getElementById('email').addEventListener('blur', function() {
-        const email = this.value.trim();
-        const emailError = document.getElementById('email-error');
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (email.length > 0 && !emailRegex.test(email)) {
-          emailError.style.display = 'block';
-        } else {
-          emailError.style.display = 'none';
-        }
-      });
+      const emailInput = document.getElementById('email');
+      if (emailInput) {
+        emailInput.addEventListener('blur', function() {
+          const email = this.value.trim();
+          const emailError = document.getElementById('email-error');
+          if (emailError) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email.length > 0 && !emailRegex.test(email)) {
+              emailError.style.display = 'block';
+            } else {
+              emailError.style.display = 'none';
+            }
+          }
+        });
+      }
 
-      // Validación para teléfono (solo números)
-      document.getElementById('phone').addEventListener('input', function() {
-        this.value = this.value.replace(/[^0-9]/g, '');
-      });
+      const phoneInput = document.getElementById('phone');
+      if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+          this.value = this.value.replace(/[^0-9]/g, '');
+        });
 
-      document.getElementById('phone').addEventListener('blur', function() {
-        const phone = this.value.trim();
-        const phoneError = document.getElementById('phone-error');
-        const phoneRegex = /^\d{10}$/;
-        if (phone.length > 0 && !phoneRegex.test(phone)) {
-          phoneError.style.display = 'block';
-        } else {
-          phoneError.style.display = 'none';
-        }
-      });
+        phoneInput.addEventListener('blur', function() {
+          const phone = this.value.trim();
+          const phoneError = document.getElementById('phone-error');
+          if (phoneError) {
+            const phoneRegex = /^\d{10}$/;
+            if (phone.length > 0 && !phoneRegex.test(phone)) {
+              phoneError.style.display = 'block';
+            } else {
+              phoneError.style.display = 'none';
+            }
+          }
+        });
+      }
     }
 
-    // Función para cerrar el modal
     function closeCustomerModal() {
       const modal = document.getElementById('customer-modal');
       if (modal) {
         modal.remove();
+        console.log('❌ Modal cerrado');
       }
     }
 
-    // Función para abrir el checkout de Wompi
+    
     function openWompiCheckout(planName, price, customerData) {
-      const reference = 'SYNERGIA-' + Date.now();
+  console.log('🚀 Abriendo Wompi checkout con:', { planName, price, customerData });
+  
+  const reference = 'SYNERGIA-' + Date.now();
+  const priceInCents = parseInt(price) * 100;
+  
+  console.log('📋 Referencia:', reference, 'Precio en centavos:', priceInCents);
+  
+  if (!customerData || !customerData.fullName || !customerData.email || !customerData.phoneNumber) {
+    console.error('❌ Datos del cliente incompletos:', customerData);
+    alert('Error: Datos del cliente incompletos');
+    return;
+  }
+  
+  if (isNaN(priceInCents) || priceInCents <= 0) {
+    console.error('❌ Precio inválido:', price, priceInCents);
+    alert('Error: Precio inválido');
+    return;
+  }
+  
+  try {
+    console.log('🔧 Creando checkout de Wompi...');
+    
+    // 🔥 CONFIGURACIÓN MÍNIMA Y LIMPIA
+    const checkoutConfig = {
+      currency: 'COP',
+      amountInCents: priceInCents,
+      reference: reference,
+      publicKey: 'pub_test_qBihrQRSeITqEWl8O3etFokC0xpDf0UQ',
+      redirectUrl: window.location.origin + '/pago-exitoso.html',
       
-      try {
-        const checkout = new WidgetCheckout({
-          currency: 'COP',
-          amountInCents: parseInt(price) * 100,
-          reference: reference,
-          publicKey: 'pub_test_qBihrQRSeITqEWl8O3etFokC0xpDf0UQ',
-          redirectUrl: window.location.origin + '/pago-exitoso.html',
-          
-          customerData: customerData,
-          
-          shippingAddress: {
-            addressLine1: 'Dirección por confirmar',
-            country: 'CO',
-            region: 'Bogotá D.C.',
-            city: 'Bogotá',
-            postalCode: '110111',
-            phoneNumber: customerData.phoneNumber,
-            phoneNumberCountryCode: 'CO'
-          },
-          
-          productDescription: planName,
-          logo: window.location.origin + '/assets/img/logo.jpg',
-          name: 'SynergyaTech',
-          description: planName
-        });
-        
-        checkout.open(function (result) {
-          console.log('Resultado del checkout:', result);
-          
-          if (result.transaction) {
-            console.log('ID de transacción:', result.transaction.id);
-            console.log('Estado:', result.transaction.status);
-          }
-        });
-        
-      } catch (error) {
-        console.error('Error al abrir Wompi checkout:', error);
-        alert('Error al procesar el pago. Por favor intenta nuevamente o contacta con soporte.');
+      // Solo los campos básicos y necesarios
+      customerData: {
+        email: customerData.email,
+        fullName: customerData.fullName
+        // Removemos phoneNumber temporalmente para probar
+      },
+      
+      productDescription: planName,
+      name: 'SynergyaTech'
+    };
+    
+    console.log('⚙️ Configuración del checkout:', checkoutConfig);
+    
+    const checkout = new WidgetCheckout(checkoutConfig);
+    
+    console.log('🎯 Checkout creado, abriendo...');
+    
+    checkout.open(function (result) {
+      console.log('📊 Resultado del checkout:', result);
+      
+      if (result.transaction) {
+        console.log('🆔 ID de transacción:', result.transaction.id);
+        console.log('📈 Estado:', result.transaction.status);
       }
-    }
+    });
+    
+  } catch (error) {
+    console.error('💥 Error detallado al abrir Wompi checkout:', error);
+    alert('Error al procesar el pago: ' + error.message + '. Por favor intenta nuevamente o contacta con soporte.');
+  }
+}
 
-    // Cerrar modal al hacer clic fuera de él
+    // Event listeners globales
     document.addEventListener('click', function(e) {
       const modal = document.getElementById('customer-modal');
       if (modal && e.target === modal) {
@@ -645,7 +849,6 @@
       }
     });
 
-    // Cerrar modal con tecla Escape
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeCustomerModal();
@@ -654,10 +857,14 @@
     
     // Inicializar la página
     document.addEventListener('DOMContentLoaded', function() {
-      setupPlanInfo();
+      console.log('🚀 Página cargada, inicializando...');
+      
+      setTimeout(() => {
+        setupPlanInfo();
+        checkWompiSDK();
+      }, 200);
     });
   </script>
 
 </body>
-
 </html>
