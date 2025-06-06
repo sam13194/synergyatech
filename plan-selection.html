@@ -199,6 +199,8 @@
       }
     }
   </style>
+  <script src="https://checkout.wompi.co/widget.js"></script>
+
 </head>
 
 <body>
@@ -313,22 +315,61 @@
     }
     
     // Función para proceder al pago
-    function proceedToPayment() {
-      const params = getUrlParams();
-      
-      // Aquí puedes integrar con tu pasarela de pago preferida
-      // Por ejemplo: PayU, Mercado Pago, Stripe, etc.
-      
-      // Ejemplo básico - redirigir a una página de pago
-      alert('Redirigiendo a la pasarela de pago segura...');
-      
-      // Ejemplo de integración con una pasarela de pago
-      // window.location.href = `payment.html?plan=${params.plan}&price=${params.price}`;
-      
-      // O abrir directamente la pasarela de pago externa
-      // window.open('https://checkout.payulatam.com/...', '_blank');
-    }
     
+    // Función para proceder al pago con Wompi
+    function proceedToPayment() {
+        const params = getUrlParams();
+        
+        // Obtener información del plan
+        const planNames = {
+            'inicial': 'Plan Inicial - Desarrollo Web',
+            'negocio': 'Plan Negocio - Desarrollo Web',
+            'completo': 'Plan Completo - Desarrollo Web'
+        };
+        
+        const planName = planNames[params.plan] || 'Plan de Desarrollo Web';
+        const price = params.price || '0';
+        
+        // Generar referencia única
+        const reference = 'SYNERGIA-' + Date.now();
+        
+        // Configurar Wompi Checkout
+        const checkout = new WidgetCheckout({
+            currency: 'COP',
+            amountInCents: parseInt(price) * 100, // Wompi maneja centavos
+            reference: reference,
+            publicKey: 'pub_test_qBihrQRSeITqEWl8O3etFokC0xpDf0UQ',
+            redirectUrl: window.location.origin + '/pago-exitoso.html', // URL de tu GitHub Pages
+            
+            // Información del producto
+            productDescription: planName,
+            
+            // Personalización (opcional)
+            logo: window.location.origin + '/assets/img/logo.jpg',
+            name: 'SynergyaTech',
+            description: planName,
+            
+            // Información del cliente (opcional)
+            customerData: {
+            email: '', // Puedes pedir este dato en un formulario
+            fullName: '', // Puedes pedir este dato en un formulario
+            phoneNumber: '', // Puedes pedir este dato en un formulario
+            phoneNumberCountryCode: 'CO'
+            }
+        });
+  
+  // Abrir el checkout
+  checkout.open(function (result) {
+    // Esta función se ejecuta cuando se cierra el checkout
+    const transaction = result.transaction;
+    console.log('Transacción:', transaction);
+    
+    // Puedes manejar diferentes estados aquí si es necesario
+    if (transaction && transaction.status === 'APPROVED') {
+      console.log('Pago aprobado:', transaction.id);
+    }
+  });
+}
     // Inicializar la página
     document.addEventListener('DOMContentLoaded', function() {
       setupPlanInfo();

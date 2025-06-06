@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado del Pago - SynergyaTech</title>
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
+    <style>
+        .result-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .success { color: #28a745; }
+        .pending { color: #ffc107; }
+        .failed { color: #dc3545; }
+        .icon { font-size: 4em; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="result-container">
+            <div id="payment-result">
+                <div class="icon">⏳</div>
+                <h2>Verificando el resultado del pago...</h2>
+                <p>Por favor espera mientras procesamos la información.</p>
+            </div>
+            <div class="mt-4">
+                <a href="sistemas.html" class="btn btn-primary">Volver a Planes</a>
+                <a href="index.html" class="btn btn-outline-primary">Ir al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Obtener parámetros de respuesta de Wompi
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id'); // ID de la transacción
+        const status = urlParams.get('status'); // Estado de la transacción
+        
+        const resultDiv = document.getElementById('payment-result');
+        
+        // Manejar diferentes estados de Wompi
+        switch(status) {
+            case 'APPROVED':
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        <div class="icon">✅</div>
+                        <h2>¡Pago Exitoso!</h2>
+                        <p>Tu pago ha sido procesado y aprobado correctamente.</p>
+                        <p><strong>ID de Transacción:</strong> ${id}</p>
+                        <p>En breve nos pondremos en contacto contigo para iniciar tu proyecto.</p>
+                        <small class="text-muted">Recibirás un correo de confirmación pronto.</small>
+                    </div>
+                `;
+                break;
+                
+            case 'PENDING':
+                resultDiv.innerHTML = `
+                    <div class="pending">
+                        <div class="icon">⏳</div>
+                        <h2>Pago Pendiente</h2>
+                        <p>Tu pago está siendo procesado por el banco.</p>
+                        <p><strong>ID de Transacción:</strong> ${id}</p>
+                        <p>Te notificaremos por correo cuando se confirme el pago.</p>
+                    </div>
+                `;
+                break;
+                
+            case 'DECLINED':
+                resultDiv.innerHTML = `
+                    <div class="failed">
+                        <div class="icon">❌</div>
+                        <h2>Pago Rechazado</h2>
+                        <p>No se pudo procesar tu pago.</p>
+                        <p><strong>ID de Transacción:</strong> ${id}</p>
+                        <p>Por favor verifica tu información e intenta nuevamente.</p>
+                    </div>
+                `;
+                break;
+                
+            case 'ERROR':
+                resultDiv.innerHTML = `
+                    <div class="failed">
+                        <div class="icon">⚠️</div>
+                        <h2>Error en el Pago</h2>
+                        <p>Ocurrió un error durante el procesamiento.</p>
+                        <p>Por favor contacta con nuestro soporte técnico.</p>
+                    </div>
+                `;
+                break;
+                
+            default:
+                // Si no hay parámetros, mostrar mensaje genérico
+                resultDiv.innerHTML = `
+                    <div class="failed">
+                        <div class="icon">❓</div>
+                        <h2>Estado del Pago No Disponible</h2>
+                        <p>No pudimos determinar el estado de tu transacción.</p>
+                        <p>Por favor contacta con nuestro soporte técnico.</p>
+                    </div>
+                `;
+        }
+        
+        // Opcional: Enviar información de la transacción a Google Analytics o similar
+        if (status === 'APPROVED' && id) {
+            console.log('Pago exitoso registrado:', id);
+            // Aquí puedes agregar tracking de conversión
+        }
+    </script>
+</body>
+</html>
