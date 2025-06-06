@@ -30,7 +30,16 @@
 
   <!-- SDK de Wompi -->
   <script src="https://checkout.wompi.co/widget.js"></script>
-
+    <!-- Agregar después del <title> -->
+<meta http-equiv="Content-Security-Policy" content="
+default-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.wompi.co https://*.wompi.co https://api.wompi.co; 
+style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://checkout.wompi.co; 
+font-src 'self' https://fonts.gstatic.com; 
+img-src 'self' data: https: http:; 
+connect-src 'self' https://checkout.wompi.co https://*.wompi.co https://api.wompi.co https://api-sandbox.wompi.co;
+frame-src 'self' https://checkout.wompi.co https://*.wompi.co;
+">
   <!-- Verificador de carga de Wompi -->
   <script>
     window.addEventListener('load', function() {
@@ -777,7 +786,6 @@
       }
     }
 
-    
     function openWompiCheckout(planName, price, customerData) {
   console.log('🚀 Abriendo Wompi checkout con:', { planName, price, customerData });
   
@@ -786,7 +794,8 @@
   
   console.log('📋 Referencia:', reference, 'Precio en centavos:', priceInCents);
   
-  if (!customerData || !customerData.fullName || !customerData.email || !customerData.phoneNumber) {
+  // Validaciones más estrictas
+  if (!customerData || !customerData.fullName || !customerData.email) {
     console.error('❌ Datos del cliente incompletos:', customerData);
     alert('Error: Datos del cliente incompletos');
     return;
@@ -801,23 +810,42 @@
   try {
     console.log('🔧 Creando checkout de Wompi...');
     
-    // 🔥 CONFIGURACIÓN MÍNIMA Y LIMPIA
+    // Limpiar datos más exhaustivamente
+    const cleanEmail = customerData.email.trim().toLowerCase();
+    const cleanFullName = customerData.fullName.trim();
+    
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(cleanEmail)) {
+      alert('Error: Email no válido');
+      return;
+    }
+    
+    // Validar nombre
+    if (cleanFullName.length < 2) {
+      alert('Error: Nombre no válido');
+      return;
+    }
+    
+    // 🔥 CONFIGURACIÓN CORREGIDA - SIN collectShipping
     const checkoutConfig = {
       currency: 'COP',
       amountInCents: priceInCents,
       reference: reference,
       publicKey: 'pub_test_qBihrQRSeITqEWl8O3etFokC0xpDf0UQ',
-      redirectUrl: window.location.origin + '/pago-exitoso.html',
+      redirectUrl: `${window.location.origin}/pago-exitoso.html`,
       
-      // Solo los campos básicos y necesarios
+      // Solo los campos esenciales
       customerData: {
-        email: customerData.email,
-        fullName: customerData.fullName
-        // Removemos phoneNumber temporalmente para probar
+        email: cleanEmail,
+        fullName: cleanFullName
       },
       
+      // Información del producto
       productDescription: planName,
       name: 'SynergyaTech'
+      
+      // 🔥 REMOVIDO: collectShipping, skipResult y description
     };
     
     console.log('⚙️ Configuración del checkout:', checkoutConfig);
@@ -829,7 +857,7 @@
     checkout.open(function (result) {
       console.log('📊 Resultado del checkout:', result);
       
-      if (result.transaction) {
+      if (result && result.transaction) {
         console.log('🆔 ID de transacción:', result.transaction.id);
         console.log('📈 Estado:', result.transaction.status);
       }
@@ -837,9 +865,23 @@
     
   } catch (error) {
     console.error('💥 Error detallado al abrir Wompi checkout:', error);
-    alert('Error al procesar el pago: ' + error.message + '. Por favor intenta nuevamente o contacta con soporte.');
+    
+    // 🔥 MANEJO DE ERRORES CORREGIDO
+    let errorMessage = 'Error al procesar el pago. Por favor intenta nuevamente.';
+    
+    if (error && error.message) {
+      if (error.message.indexOf('422') !== -1) {
+        errorMessage = 'Error de configuración del pago. Por favor verifica los datos.';
+      } else if (error.message.indexOf('envío') !== -1) {
+        errorMessage = 'Error con la información de envío. Intenta nuevamente.';
+      }
+    }
+    
+    alert(errorMessage + ' Si el problema persiste, contacta con soporte.');
   }
 }
+    
+
 
     // Event listeners globales
     document.addEventListener('click', function(e) {
@@ -856,6 +898,21 @@
     });
     
     // Inicializar la página
+    // 🔥 MANEJO DE ERRORES GLOBALES CORREGIDO
+window.addEventListener('error', function(e) {
+  console.error('Error global capturado:', e.error);
+  
+  if (e.error && e.error.message) {
+    if (e.error.message.indexOf('Wompi') !== -1) {
+      console.error('Error específico de Wompi:', e.error.message);
+    }
+  }
+});
+
+// Manejo de errores de CSP
+window.addEventListener('securitypolicyviolation', function(e) {
+  console.log('CSP Violation:', e.violatedDirective, e.blockedURI);
+});
     document.addEventListener('DOMContentLoaded', function() {
       console.log('🚀 Página cargada, inicializando...');
       
